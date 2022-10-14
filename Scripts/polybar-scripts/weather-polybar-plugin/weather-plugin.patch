@@ -1,0 +1,17 @@
+--- a/weather-plugin.sh
++++ b/weather-plugin.sh
+@@ -128,6 +128,7 @@ function getData {
+     if [ $CODE -eq 0 ]; then
+         RESPONSECODE=`echo $RESPONSE | jq .cod`
+     fi
++    [ -z $RESPONSECODE ] && RESPONSECODE=503
+     if [ $CODE -ne 0 ] || [ $RESPONSECODE -ne 200 ]; then
+         if [ $CODE -ne 0 ]; then
+             ERR_MSG="curl Error $CODE"
+@@ -325,5 +326,5 @@ if [ $ERROR -eq 0 ]; then
+     setIcons
+     outputCompact
+ else
+-    echo " "
++    echo $ERR_MSG
+ fi
